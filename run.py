@@ -43,7 +43,7 @@ def extract_data(db_file_path):
 
 print('file: ', args['db_file_path'])
 print('type: ', args['type'])
-print('from: ', args['from_'], 'to: ', args['to_'])
+print('from - to: ', args['from_'], args['to_'])
 
 extract_data(args['db_file_path'])
 ann = pd.read_csv('output_tables/annotation.csv')
@@ -51,7 +51,7 @@ rcmt = pd.read_csv('output_tables/recruitment.csv')
 rcmt = rcmt[['index', 'id']]
 rcmt.columns = ['index', 'recruiment_id']
 df = pd.merge(rcmt, ann, on='recruiment_id', how='right')
-df = df[df.user_id != 1].head(5)
+df = df[df.user_id != 1].sample(10)
 print(df)
 
 
