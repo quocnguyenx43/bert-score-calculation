@@ -101,11 +101,18 @@ def bert_score_each_sample(li_expl_sents):
 def bert_score_func(df, x, y):
     df = df.to_numpy()[x:y]
     precisions, recalls, f1s = [], [], []
-    for i, sample in tqdm(enumerate(df), total=len(df), desc=f"Processing {x}-{y}"):
+    # for i, sample in tqdm(enumerate(df), total=len(df), desc=f"Processing {x}-{y}"):
+    #     precision, recall, f1 = bert_score_each_sample(sample)
+    #     precisions.append(precision)
+    #     recalls.append(recall)
+    #     f1s.append(f1)
+
+    for sample in (df):
         precision, recall, f1 = bert_score_each_sample(sample)
         precisions.append(precision)
         recalls.append(recall)
         f1s.append(f1)
+    
     
     print(f"################### {x} - {y} ###################")
     print(f'prec: {np.mean(precisions)}, recall: {np.mean(recalls)}, f1: {np.mean(f1s)}')
