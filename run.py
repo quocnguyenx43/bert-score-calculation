@@ -78,6 +78,7 @@ print(df.user_id.value_counts().T)
 pv_table_expl = df.pivot(index='recruiment_id', columns='user_id', values='explanation')
 pv_table_expl.columns = pv_table_expl.columns.map(index_to_name)
 pv_table_expl.dropna(inplace=True)
+pv_table_expl = pv_table_expl[args['from_']: args['to_']]
 print('Len data: ' + str(len(pv_table_expl)))
 
 def bert_score_each_sample(li_expl_sents):
