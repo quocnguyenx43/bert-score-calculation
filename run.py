@@ -10,6 +10,9 @@ import bert_score
 
 from tqdm import tqdm
 
+import warnings
+warnings.filterwarnings("ignore")
+
 
 parser = arg.ArgumentParser(description="Params")
 parser.add_argument("--db_file_path", type=str)
