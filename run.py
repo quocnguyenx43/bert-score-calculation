@@ -111,5 +111,5 @@ def bert_score_func(df):
     
     print(f'prec: {np.mean(precisions)}, recall: {np.mean(recalls)}, f1: {np.mean(f1s)}')
 
-print(f"From " + str(args['from_']) + " to " + str(args['to_'])}
+print(f"From " + str(args['from_']) + " to " + str(args['to_']))
 bert_score_func(pv_table_expl, args['from_'], args['to_'])
