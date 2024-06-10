@@ -12,7 +12,7 @@ from tqdm import tqdm
 
 
 parser = arg.ArgumentParser(description="Params")
-parser.add_argument("--db_path_file", type=str)
+parser.add_argument("--db_file_path", type=str)
 parser.add_argument("--type", type=str)
 parser.add_argument("--from_", type=int)
 parser.add_argument("--to_", type=int)
@@ -38,15 +38,14 @@ def extract_data(db_file_path):
             
     conn.close()
 
-print('file: ', args['db_path_file'])
+print('file: ', args['db_file_path'])
 print('type: ', args['type'])
-extract_data(args['db_path_file'])
+extract_data(args['db_file_path'])
 
 ann = pd.read_csv('output_tables/annotation.csv')
 rcmt = pd.read_csv('output_tables/recruitment.csv')
 rcmt = rcmt[['index', 'id']]
 rcmt.columns = ['index', 'recruiment_id']
-
 df = pd.merge(rcmt, ann, on='recruiment_id', how='right')
 df = df[df.user_id != 1]
 
@@ -106,9 +105,6 @@ def bert_score_func(df, x, y):
         f1s.append(f1)
     
     print(f"################### {x} - {y} ###################")
-    print('R1: ', np.mean(precisions))
-    print('R2: ', np.mean(recalls))
-    print('R3: ', np.mean(f1s))
-
+    print(f'prec: {np.mean(precisions)}, recall: {np.mean(recalls)}, f1: {np.mean(f1s)}')
 
 bert_score_func(pv_table_expl, args['from_'], args['to_'])
