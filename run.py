@@ -60,7 +60,7 @@ def fill_annotator(annos):
 
 if args['type'] == 'full':
     df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh'])
-    print(['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh']))
+    print(['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh'])
 else:
     df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh'])
     print(['VQuoc', 'TDuong', 'BKhanh'])
