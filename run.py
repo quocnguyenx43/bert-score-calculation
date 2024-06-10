@@ -103,13 +103,14 @@ def bert_score_each_sample(li_expl_sents):
 def bert_score_func(df):
     df = df.to_numpy()
     precisions, recalls, f1s = [], [], []
-    for sample in df:
+    for sample in tqdm(df, desc="Calculating BERT Scores"):
         precision, recall, f1 = bert_score_each_sample(sample)
         precisions.append(precision)
         recalls.append(recall)
         f1s.append(f1)
     
     return np.mean(precisions), np.mean(recalls), np.mean(f1s)
+
 
 prec, rec, f1 = bert_score_func(pv_table_expl)
 print(f"From " + str(args['from_']) + " to " + str(args['to_']))
