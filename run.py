@@ -43,7 +43,7 @@ def extract_data(db_file_path):
 
 print('file: ', args['db_file_path'])
 print('type: ', args['type'])
-print('from - to: ', args['from_'], args['to_'])
+print('from - to: ', args['from_'], "-", args['to_'])
 
 extract_data(args['db_file_path'])
 ann = pd.read_csv('output_tables/annotation.csv')
@@ -51,9 +51,7 @@ rcmt = pd.read_csv('output_tables/recruitment.csv')
 rcmt = rcmt[['index', 'id']]
 rcmt.columns = ['index', 'recruiment_id']
 df = pd.merge(rcmt, ann, on='recruiment_id', how='right')
-df = df[df.user_id != 1].sample(10)
-print(df)
-
+df = df[df.user_id != 1]
 
 counts = df.user_id.value_counts().sort_index()
 indexes = [2, 3, 4, 6, 7, 8, 9, 10, 11]
@@ -74,9 +72,8 @@ if args['type'] == 'full':
     df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh'])
 else:
     df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh'])
-
-
-print(df.user_id.value_counts())
+print('After filtering: ')
+print(df.user_id.value_counts().T)
 
 pv_table_expl = df.pivot(index='recruiment_id', columns='user_id', values='explanation')
 pv_table_expl.columns = pv_table_expl.columns.map(index_to_name)
