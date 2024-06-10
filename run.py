@@ -75,7 +75,7 @@ else:
     df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh'])
 
 
-print(df)
+print(df.user_id.value_counts())
 
 pv_table_expl = df.pivot(index='recruiment_id', columns='user_id', values='explanation')
 pv_table_expl.columns = pv_table_expl.columns.map(index_to_name)
