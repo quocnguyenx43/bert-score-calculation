@@ -72,8 +72,17 @@ if args['type'] == 'full':
     df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh'])
 else:
     df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh'])
+    
 print('After filtering: ')
-print(df.user_id.value_counts().T)
+counts = df.user_id.value_counts().sort_index()
+indexes = [2, 3, 4, 6, 7, 8, 9, 10, 11]
+names = ['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh']
+index_to_name = dict(zip(indexes, names))
+index_to_count = counts.to_dict()
+df_counts = pd.DataFrame({'name': index_to_name, 'count': index_to_count})
+df_counts = df_counts.set_index(df_counts.index)
+df_counts['count'].fillna(0, inplace=True)
+print(df_counts.T)
 
 pv_table_expl = df.pivot(index='recruiment_id', columns='user_id', values='explanation')
 pv_table_expl.columns = pv_table_expl.columns.map(index_to_name)
