@@ -44,8 +44,8 @@ def extract_data(db_file_path):
 print('file: ', args['db_file_path'])
 print('type: ', args['type'])
 print('from: ', args['from_'], 'to: ', args['to_'])
-extract_data(args['db_file_path'])
 
+extract_data(args['db_file_path'])
 ann = pd.read_csv('output_tables/annotation.csv')
 rcmt = pd.read_csv('output_tables/recruitment.csv')
 rcmt = rcmt[['index', 'id']]
@@ -60,10 +60,8 @@ def fill_annotator(annos):
 
 if args['type'] == 'full':
     df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh'])
-    print(['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh'])
 else:
     df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh'])
-    print(['VQuoc', 'TDuong', 'BKhanh'])
 
 counts = df.user_id.value_counts().sort_index()
 indexes = [2, 3, 4, 6, 7, 8, 9, 10, 11]
@@ -79,7 +77,6 @@ pv_table_expl = df.pivot(index='recruiment_id', columns='user_id', values='expla
 pv_table_expl.columns = pv_table_expl.columns.map(index_to_name)
 pv_table_expl.dropna(inplace=True)
 print('Len data: ' + str(len(pv_table_expl)))
-
 
 def bert_score_each_sample(li_expl_sents):
     # li_expl_sents = sent_1, sent_2, sent_3,...
