@@ -90,7 +90,9 @@ def bert_score_each_sample(li_expl_sents):
             [comb[0]], [comb[1]],
             model_type='bert-base-multilingual-cased',
             lang='vi', 
-            verbose=True
+            verbose=False,
+            device='cuda',
+            batch_size=32,
         )
         precisions.append(precision)
         recalls.append(recall)
