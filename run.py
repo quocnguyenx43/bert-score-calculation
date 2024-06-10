@@ -112,6 +112,7 @@ def bert_score_func(df, x, y):
         precisions.append(precision)
         recalls.append(recall)
         f1s.append(f1)
+        print()
     
     
     print(f"################### {x} - {y} ###################")
