@@ -69,14 +69,16 @@ def fill_annotator(annos):
     return df[df.user_id.map(lambda x: x in re)]
 
 if args['type'] == 'full':
+    indexes = [2, 3, 4, 6, 7, 8, 9, 10, 11]
+    names = ['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh']
     df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh'])
 else:
     df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh'])
-    
+    indexes = [2, 3, 4]
+    names = ['VQuoc', 'TDuong', 'BKhanh']
+
 print('After filtering: ')
 counts = df.user_id.value_counts().sort_index()
-indexes = [2, 3, 4, 6, 7, 8, 9, 10, 11]
-names = ['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh']
 index_to_name = dict(zip(indexes, names))
 index_to_count = counts.to_dict()
 df_counts = pd.DataFrame({'name': index_to_name, 'count': index_to_count})
