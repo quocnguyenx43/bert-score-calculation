@@ -1,3 +1,7 @@
+#!/bin/bash
+
+# Redirect outputs
+exec > >(tee -i ./run_log.log) 2>&1
 
 echo "======= GOLDEN ======="
 
