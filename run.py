@@ -44,6 +44,7 @@ def extract_data(db_file_path):
 print('file: ', args['db_file_path'])
 print('type: ', args['type'])
 print('from - to: ', args['from_'], "-", args['to_'])
+print()
 
 extract_data(args['db_file_path'])
 ann = pd.read_csv('output_tables/annotation.csv')
@@ -62,6 +63,7 @@ df_counts = pd.DataFrame({'name': index_to_name, 'count': index_to_count})
 df_counts = df_counts.set_index(df_counts.index)
 df_counts['count'].fillna(0, inplace=True)
 print(df_counts.T)
+print()
 
 def fill_annotator(annos):
     index_to_name_reverse = {v: k for k, v in index_to_name.items()}
@@ -85,12 +87,14 @@ df_counts = pd.DataFrame({'name': index_to_name, 'count': index_to_count})
 df_counts = df_counts.set_index(df_counts.index)
 df_counts['count'].fillna(0, inplace=True)
 print(df_counts.T)
+print(len(df))
 
 pv_table_expl = df.pivot(index='recruiment_id', columns='user_id', values='explanation')
 pv_table_expl.columns = pv_table_expl.columns.map(index_to_name)
 pv_table_expl.dropna(inplace=True)
 pv_table_expl = pv_table_expl[args['from_']: args['to_']]
 print('Len data: ' + str(len(pv_table_expl)))
+print()
 
 def bert_score_each_sample(li_expl_sents):
     # li_expl_sents = sent_1, sent_2, sent_3,...
