@@ -52,6 +52,7 @@ rcmt = rcmt[['index', 'id']]
 rcmt.columns = ['index', 'recruiment_id']
 df = pd.merge(rcmt, ann, on='recruiment_id', how='right')
 df = df[df.user_id != 1].head(5)
+print(df.user_id.value_counts())
 
 
 counts = df.user_id.value_counts().sort_index()
