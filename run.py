@@ -43,6 +43,7 @@ def extract_data(db_file_path):
 
 print('file: ', args['db_file_path'])
 print('type: ', args['type'])
+print('from: ', args['from_'], 'to: ', args['to_'])
 extract_data(args['db_file_path'])
 
 ann = pd.read_csv('output_tables/annotation.csv')
@@ -50,7 +51,19 @@ rcmt = pd.read_csv('output_tables/recruitment.csv')
 rcmt = rcmt[['index', 'id']]
 rcmt.columns = ['index', 'recruiment_id']
 df = pd.merge(rcmt, ann, on='recruiment_id', how='right')
-df = df[df.user_id != 1]
+df = df[df.user_id != 1].head(5)
+
+def fill_annotator(annos):
+    index_to_name_reverse = {v: k for k, v in index_to_name.items()}
+    re = [index_to_name_reverse[name] for name in annos]
+    return df[df.user_id.map(lambda x: x in re)]
+
+if args['type'] == 'full':
+    df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh'])
+    print(['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh']))
+else:
+    df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh'])
+    print(['VQuoc', 'TDuong', 'BKhanh'])
 
 counts = df.user_id.value_counts().sort_index()
 indexes = [2, 3, 4, 6, 7, 8, 9, 10, 11]
@@ -62,22 +75,9 @@ df_counts = df_counts.set_index(df_counts.index)
 df_counts['count'].fillna(0, inplace=True)
 print(df_counts.T)
 
-def fill_annotator(annos):
-    index_to_name_reverse = {v: k for k, v in index_to_name.items()}
-    re = [index_to_name_reverse[name] for name in annos]
-    return df[df.user_id.map(lambda x: x in re)]
-
-if args['type'] == 'full':
-    df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh', 'QNhu', 'TDinh', 'HGiang', 'BHan', 'Kiet', 'HAnh'])
-else:
-    df = fill_annotator(['VQuoc', 'TDuong', 'BKhanh'])
-
-
 pv_table_expl = df.pivot(index='recruiment_id', columns='user_id', values='explanation')
 pv_table_expl.columns = pv_table_expl.columns.map(index_to_name)
 pv_table_expl.dropna(inplace=True)
-print('Example data: ')
-pv_table_expl.head()
 print('Len data: ' + str(len(pv_table_expl)))
 
 
